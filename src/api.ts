@@ -32,6 +32,10 @@ export async function hamtaTvaRatterEfterVarandra(
   ms: number = 100,
 ): Promise<Ratt[]> {
   // TODO
+  const ratt1 = await hamtaRattFranServer(id1, ms);
+  const ratt2 = await hamtaRattFranServer(id2, ms);
+
+  return [ratt1, ratt2];
 }
 
 // 5. Samma sak, men båda ANROPEN startas samtidigt (Promise.all). Ska gå dubbelt så snabbt.
@@ -41,6 +45,12 @@ export async function hamtaTvaRatterParallellt(
   ms: number = 100,
 ): Promise<Ratt[]> {
   // TODO
+  const [ratt1, ratt2] = await Promise.all([
+    hamtaRattFranServer(id1, ms),
+    hamtaRattFranServer(id2, ms),
+  ]);
+
+  return [ratt1, ratt2];
 }
 
 // 6. Försök upp till maxForsok gånger. anropFn är en funktion som returnerar en promise.
