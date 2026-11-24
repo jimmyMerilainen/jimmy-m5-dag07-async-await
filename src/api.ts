@@ -94,4 +94,18 @@ export async function laddaMeny(
   vidTillstand: (tillstand: Tillstand) => void,
 ): Promise<void> {
   // TODO
+  vidTillstand({ typ: "laddar" });
+  try {
+    const ratter = await hamtaFn();
+    if (ratter.length === 0) {
+      vidTillstand({ typ: "tomt" });
+      return;
+    }
+    vidTillstand({ typ: "klar", ratter: ratter });
+  } catch (error) {
+    vidTillstand({
+      typ: "fel",
+      meddelande: error instanceof Error ? error.message : String(error),
+    });
+  }
 }
